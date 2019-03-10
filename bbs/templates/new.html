@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+  <form action="/create" method="POST">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        id="userName"
+        name="username"
+        value="{{username}}"
+        placeholder="ユーザー名"
+      />
+    </div>
+    <div class="form-group">
+      <textarea
+        class="form-control"
+        id="tweet"
+        name="tweet"
+        placeholder="つぶやきを140文字以内で記述"
+        value="{{tweet}}"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">送信</button>
+  </form>
+</div>
+{% endblock %}

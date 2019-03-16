@@ -29,7 +29,21 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from . import db
+    # register the database commands
+    from flaskr import db
     db.init_app(app)
+
+    # apply the blueprints to the app
+    # Blueprint
+    # A Blueprint is a way to organize a group of related views and other code.
+    from flaskr import auth,blog
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
+
+    # make url_for('index') == url_for('blog.index')
+    # in another app, you might define a separate main index here with
+    # app.route, while giving the blog blueprint a url_prefix, but for
+    # the tutorial the blog will be the main index
+    app.add_url_rule('/', endpoint='index')
 
     return app

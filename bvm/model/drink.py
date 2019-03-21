@@ -115,3 +115,37 @@ class Drink(object):
         cnx.close()
     
         return
+
+    def update_count(drink_id, count):
+        """
+        個数更新
+        """
+        cnx = model.db.get_connection()
+        cur = cnx.cursor()
+    
+        # 在庫管理の数を一つ減らす
+        query = "UPDATE stocks SET count = %s, updated_at = now() WHERE id = %s"
+        val = (count, drink_id,)
+        cur.execute(query, val)
+
+        cnx.commit()
+        cnx.close()
+    
+        return
+
+    def update_status(drink_id, status):
+        """
+        飲み物ステータス更新
+        """
+        cnx = model.db.get_connection()
+        cur = cnx.cursor()
+    
+        # 在庫管理の数を一つ減らす
+        query = "UPDATE drinks SET status = %s, updated_at = now() WHERE id = %s"
+        val = (status, drink_id,)
+        cur.execute(query, val)
+
+        cnx.commit()
+        cnx.close()
+    
+        return

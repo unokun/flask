@@ -2,7 +2,12 @@
 
 <div class="container">
   <form action="/drinks/buy" method="POST">
-    <div>金額<input type="text" name="charge" value=""></div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="charge-addon">金額</span>
+      </div>
+      <input type="text" class="form-control" placeholder="1000" name="charge" id="charge" value=""></div>
+    </div>
     <div id="flex">
       {% for drink in drinks %}
         <div class="drink">
@@ -10,7 +15,7 @@
           <span>{{drink.name}}</span>
           <span>{{drink.price}}円</span>
           {% if drink.count == 0 %}
-          <span class="danger">売り切れ</span>
+          <span class="red">売り切れ</span>
           {% else %}
           <input type="radio" name="drink_id" value="{{drink.id}}">
           {% endif %}

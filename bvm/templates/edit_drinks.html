@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">商品画像</th>
+        <th scope="col">商品名</th>
+        <th scope="col">価格</th>
+        <th scope="col">在庫数</th>
+        <th scope="col">ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for drink in drinks %}
+      {% if drink.status == '0' %}
+        <tr class="table-secondary">
+      {% else %}
+        <tr>
+      {% endif %}
+            <form action="{{ url_for('update_drink', id=drink.id) }}" method="post">
+            <td><img class="img_size" src="{{drink.image}}"></td>
+            <td>{{drink.name}}</td>
+            <td>{{drink.price}}円</td>
+            <td><input type="text" class="text-right" name="update_count" value="{{drink.count}}">個&nbsp;&nbsp;<button type="submit" class="btn btn-primary">変更</button></td>
+          </form>
+        {% if drink.status == '1' %}
+          <form action="{{ url_for('update_drink', id=drink.id) }}" method="post">
+            <td><button type="submit" class="btn btn-primary">公開 → 非公開</button></td>
+            <input type="hidden" name="change_status" value="0">
+          </form>
+        {% else %}
+          <form action="{{ url_for('update_drink', id=drink.id) }}" method="post">
+            <td><button type="submit" class="btn btn-primary">非公開 → 公開</button></td>
+            <input type="hidden" name="change_status" value="1">
+          </form>
+        {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

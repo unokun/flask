@@ -79,6 +79,39 @@ def buy_drink():
     # エラーあり
     return render_template('buy_drink.html', errors=errors)
 
+@app.route("/drinks/edit", methods=['GET'])
+def edit_drinks():
+    """ 商品編集画面 """
+
+    drinks = Drink.find_all()
+    return render_template('edit_drinks.html', drinks=drinks)
+
+@app.route("/drink/<int:id>/update", methods=['POST'])
+def update_drink(id):
+    """ 商品更新 """
+
+    errors = []
+
+    try:
+        v = request.form['update_count']
+        update_count = int(v)
+        if update_count > 0:
+            Drink.update_count(id, update_count);
+    except KeyError:
+        pass
+
+    # 個数入力チェック
+    # errors.append('個数が不正な値です。')
+
+    if not errors:
+        try:
+            change_status= request.form['change_status']
+            Drink.update_status(id, change_status);
+        except KeyError:
+            pass
+
+    return redirect('/drinks/edit');
+
 @app.route('/hello')
 def hello():
     return 'Hello, World!'

@@ -26,7 +26,7 @@ class Drink(object):
         self.created_at = created_at
         self.updated_at = updated_at
 
-    def findAll():
+    def find_all():
         """
         drinkテーブルから飲み物一覧を取得する
         Returns
@@ -49,6 +49,29 @@ class Drink(object):
 
         return drinks
 
+    def find_by_id(drink_id):
+        """
+        drinkテーブルから飲み物情報を取得する
+        Returns
+        -------
+        drinkクラス
+        """
+        cnx = model.db.get_connection()
+        cur = cnx.cursor()
+        query = ("SELECT T1.id, T1.name, T1.price, T2.count, T1.image, T1.status, T1.created_at, T1.updated_at FROM drinks AS T1"
+                 " INNER JOIN stocks AS T2"
+                 " ON "
+                 " T2.id = T1.id"
+                 " WHERE T1.id = %s")
+        val = (drink_id,)
+        cur.execute(query, val)
+
+        (id, name, price, count, image, status, created_at, updated_at) = cur.fetchone()
+        drink = Drink(id, name, price, count, image, status, created_at, updated_at)
+        cnx.close()
+
+        return drink
+
     def insert(name, price, count, filename, status):
         """
         drinkテーブルに登録する
@@ -69,4 +92,26 @@ class Drink(object):
         cnx.commit()
         cnx.close()
 
+        return
+
+    def buy_drink(drink_id):
+        """
+        飲み物購入
+        """
+        cnx = model.db.get_connection()
+        cur = cnx.cursor()
+    
+        # 在庫管理の数を一つ減らす
+        query = "UPDATE stocks SET count = count - 1, updated_at = now() WHERE id = %s"
+        val = (drink_id,)
+        cur.execute(query, val)
+
+        # 購入履歴に登録
+        query = ("INSERT INTO  buy_histories (id, buy_at) VALUES (%s, now())")
+        val = (drink_id,)
+        cur.execute(query, val)
+
+        cnx.commit()
+        cnx.close()
+    
         return

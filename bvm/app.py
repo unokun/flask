@@ -8,15 +8,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    drinks = Drink.findAll()
+    drinks = Drink.find_all()
     return render_template('drink_list.html', drinks=drinks)
 
 @app.route("/drinks/new")
 def new_drink():
+    """ 新規商品(飲み物)追加 """
     return render_template('new_drink.html')
 
 @app.route("/drinks/add", methods=['POST'])
 def add_drink():
+    """ 新規商品(飲み物)DB登録 """
     name = request.form['name']
     price = int(request.form['price'])
     count = int(request.form['count'])
@@ -30,6 +32,52 @@ def add_drink():
     status = request.form['status']
     Drink.insert(name, price, count, filename, status)
     return redirect('/')
+
+@app.route("/drinks/buy", methods=['POST'])
+def buy_drink():
+    """ 購入 """
+    errors = []
+    # 入力チェック
+    # drink_idはradio buttonのvalueにセットしているため
+    # 未選択の場合にはkeyが存在しない
+    try:
+        v = request.form['drink_id']
+    except KeyError:
+        errors.append('飲み物を選んでください。')
+
+    if not request.form['charge']:
+        errors.append('金額は必須です。')
+
+    # 金額形式チェック
+    if not errors:
+        try:
+            charge = int(request.form['charge'])
+            if charge < 0:
+                errors.append('金額は正の数値を入力してください')
+        except:
+            errors.append('金額は数値を入力してください')
+
+    # 飲み物情報取得
+    drink_id = int(request.form['drink_id'])
+    drink = Drink.find_by_id(drink_id)
+
+    # 金額チェック
+    if not errors:
+        if (charge < drink.price):
+            errors.append('金額が足りません。')
+    
+    # 在庫チェック
+    if not errors:
+        if (drink.count < 1):
+            errors.append('商品の在庫がありません。')
+
+    if not errors:
+        # 在庫更新、購入履歴登録
+        Drink.buy_drink(drink_id)
+        return render_template('buy_drink.html', drink=drink, charge=charge)
+    
+    # エラーあり
+    return render_template('buy_drink.html', errors=errors)
 
 @app.route('/hello')
 def hello():

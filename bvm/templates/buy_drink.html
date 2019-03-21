@@ -1,0 +1,18 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    {% if errors | length > 0 %}
+        <div  class="alert alert-danger" role="alert">
+        {% for error in errors %}
+            <p>{{error}}</p>
+        {% endfor %}
+        </div>
+    {% else %}
+        <img src="{{drink.image}}">
+        <p>がしゃん！【{{drink.name}}】が買えました！</p>
+        <p>おつりは【{{charge - drink.price}}円】です</p>
+    {% endif %}
+    <div>
+        <a href="/">戻る</a>
+    </div>
+</div>
+{% endblock %}

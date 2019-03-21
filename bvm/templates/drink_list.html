@@ -9,15 +9,17 @@
           <span class="img_size"><img class="img_size" src="{{drink.image}}"></span>
           <span>{{drink.name}}</span>
           <span>{{drink.price}}円</span>
-          {% if drink.name == 0 %}
+          {% if drink.count == 0 %}
           <span class="danger">売り切れ</span>
           {% else %}
-          <input type="radio" name="drink_id" value="{{drink.id}}>">
+          <input type="radio" name="drink_id" value="{{drink.id}}">
           {% endif %}
         </div>
         {% endfor %}
-    </div>
-    <button type="submit" class="btn btn-primary">商品購入</button>
-  </form>
+      </div>
+      <div id="submit">
+        <button type="submit" class="btn btn-primary">商品購入</button>
+      </div>
+    </form>
 </div>
 {% endblock %}

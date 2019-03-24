@@ -1,0 +1,5 @@
+/* bootstrapのcheckboxでラベルがずれる件の対応 */
+input[type="radio"],input[type="checkbox"]{
+    vertical-align:middle;
+}
+   

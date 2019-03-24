@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    <form action="{{ url_for('find_employees')}}" method="POST">
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="div-id">所属</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="div-id" name="div-id">
+                    {% for division in divisions %}
+                    <option value="{{division.id}}">{{division.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="id-from">社員ID(範囲)</label>
+            <div class="col-sm-9 form-inline">
+                    <input type="text" class="form-control" id="id-from" name="id-from" placeholder="from">
+                    〜
+                    <input type="text" class="form-control" id="id-to" name="id-to" placeholder="to">
+        
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">名前</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" name="kw" placeholder="名前に含む文字">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">検索</button>
+    </form>
+</div>
+{% endblock %}

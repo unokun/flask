@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    <form action="/employee/create" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">名前</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="山田　太郎">
+        </div>
+        <div class="form-group">
+            <label for="age">年齢</label>
+            <input type="text" class="form-control" id="age" name="age" placeholder="20">
+        </div>
+        <div class="form-group">
+            <label for="age">性別</label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="form-control-input" type="radio" name="gender" id="male" value="男" checked>
+                <label class="form-control-label form-control-static">男</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="form-control-input" type="radio" name="gender" id="female" value="女">
+                <label class="form-control-label">女</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="image-file">写真</label>
+            <input type="file" class="form-control-file" id="image-file" name="image-file">
+        </div>
+        <div class="form-group">
+            <label for="zip-cd">郵便番号</label>
+            <input type="text" class="form-control" id="zip-cd" name="zip-cd" placeholder="100-1000">
+        </div>
+        <div class="form-group">
+            <label for="pref-cd">都道府県</label>
+            <select class="form-control" id="pref-cd" name="pref-cd">
+                {% for prefecture in prefectures %}
+                <option value="{{prefecture.id}}">{{prefecture.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">住所</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="千代田区1-1">
+        </div>
+        <div class="form-group">
+            <label for="div-id">所属</label>
+            <select class="form-control" id="div-id" name="div-id">
+                {% for division in divisions %}
+                <option value="{{division.id}}">{{division.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hired-date">入社日</label>
+            <input type="text" class="form-control" id="hired-date" name="hired-date" placeholder="2016-03-20">
+        </div>
+        <div class="form-group">
+            <label for="retired-date">退社日</label>
+            <input type="text" class="form-control" id="retired-date" name="retired-date" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-primary" name="cmd-type" value="exec">設定</button>
+        <button type="submit" class="btn btn-primary" name="cmd-type" value="cancel">キャンセル</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    <h2>新規部署データを作成します</h2>
+    <form action="/division/create" method="POST">
+        <div class="form-group">
+            <label for="name">名前</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="総務部">
+        </div>
+        <button type="submit" class="btn btn-primary" name="cmd-type" value="exec">設定</button>
+        <button type="submit" class="btn btn-primary" name="cmd-type" value="cancel">キャンセル</button>
+    </form>
+</div>
+{% endblock %}

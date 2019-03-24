@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+    {% if success|count > 0 %}
+    <p>{{success}}</p>
+    {% else %}
+        {% for error in errors %}
+            <p>{{error}}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="{{ url_for('index') }}" method="GET">
+        <button type="submit" class="btn btn-primary">トップページへ</button>
+    </form>
+
+</div>
+{% endblock %}

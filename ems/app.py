@@ -104,10 +104,10 @@ def update_employee(id):
             hired_date = request.form['hired-date']
         if len(request.form['retired-date']) > 0 :
             retired_date = request.form['retired-date']
-        if len(request.form['image-file']) > 0 :
+        if request.files['image-file'] :
             f = request.files['image-file']
             photo_img = f.read()
-            mimetype = 'image/' + f.rsplit('.', 1)[1]
+            mimetype = f.mimetype
         Employee.update(id, name, age, gender, zip_cd, pref_cd, address, div_id, hired_date, retired_date, photo_img, mimetype)
         success="社員情報の更新に成功しました。"
 

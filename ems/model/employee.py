@@ -156,7 +156,7 @@ class Employee(object):
         cur = cnx.cursor()
 
         # 画像登録
-        query = ("INSERT INTO photos (photo_image, mimetype) VALUES (%s, %s)")
+        query = ("INSERT INTO photos (image, mimetype) VALUES (%s, %s)")
         val = (photo_img, mimetype,)
         cur.execute(query, val)
 

@@ -225,7 +225,10 @@ def delete_division(id):
 def get_photo_image(id):
     try:
         photo = Photo.find_by_id(id)
-        return send_file(photo.image, mimetype=photo.mimetype)
+        response = make_response()
+        response.data = photo.image
+        response.headers["Content-type"] = photo.mimetype
+        return response
     except:
         pass
 
